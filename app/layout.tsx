@@ -16,16 +16,13 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<>
-				<HeaderTabs />
-
 				<body className='min-h-screen flex flex-col bg-background text-foreground'>
+					<HeaderTabs />
 					{/* Основной контент страницы */}
 					<main className='flex-1'>{children}</main>
-
 					{/* Футер всегда снизу */}
+					<RulerFooter />
 				</body>
-
-				<RulerFooter />
 			</>
 		</html>
 	);

@@ -6,14 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { MoonIcon, SunIcon } from 'lucide-react';
 
-const tabs = [
-	'Overview',
-	'Integrations',
-	'Activity',
-	'Domains',
-	'Usage',
-	'Monitoring',
-];
+const tabs = ['Главная', 'Галерея', 'Цены', 'Обо мне', 'Важно', 'Отзывы'];
 
 export default function HeaderTabs() {
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

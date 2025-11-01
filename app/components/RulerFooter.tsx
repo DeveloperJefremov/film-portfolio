@@ -7,8 +7,14 @@ const RANGE = MAX - MIN; // 60
 // Отступы: 0.5% слева + 0.5% справа = 1% всего
 const EDGE_PADDING_PERCENT = 0.5;
 
+interface Tick {
+	pos: number;
+	isMajor: boolean;
+	label: string | null;
+}
+
 export function RulerFooter() {
-	const elements = [];
+	const elements: Tick[] = [];
 	for (let i = MIN; i <= MAX; i++) {
 		const isMajor = i % 5 === 0;
 		elements.push({
