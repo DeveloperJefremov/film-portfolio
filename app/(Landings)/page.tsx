@@ -1,7 +1,7 @@
 export const metadata = {
-	title: 'Important',
+	title: 'Home',
 };
 
 export default async function Page() {
-	return <div>Important</div>;
+	return <div>Home</div>;
 }
