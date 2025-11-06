@@ -30,15 +30,15 @@ export default function HomePhotoSection() {
 				<div className='flex flex-col gap-2'>
 					<div className='w-full relative' style={{ aspectRatio: '448 / 240' }}>
 						<Image
-							src='/assets/photos/homepage/homepage3.png'
+							src='/assets/photos/homepage/homepage2.png'
 							alt='Photo 3'
 							fill
 							className='object-cover rounded-lg'
 						/>
 					</div>
-					<div className='w-full relative' style={{ aspectRatio: '448 / 304' }}>
+					<div className='w-full relative' style={{ aspectRatio: '448 / 315' }}>
 						<Image
-							src='/assets/photos/homepage/homepage2.png'
+							src='/assets/photos/homepage/homepage3.png'
 							alt='Photo 4'
 							fill
 							className='object-cover rounded-lg'

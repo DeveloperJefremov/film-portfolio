@@ -4,6 +4,7 @@ import HeaderTabs from './components/HeaderTabs';
 import { RulerFooter } from './components/RulerFooter';
 import './globals.css';
 import { ThemeProvider } from './shared/providers/ThemeProvider';
+import LayoutHeader from './widgets/LayoutHeader';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -24,7 +25,8 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<HeaderTabs />
+					{/* <HeaderTabs /> */}
+					<LayoutHeader />
 					{/* Основной контент страницы */}
 					<main className='flex-1'>{children}</main>
 					{/* Футер */}

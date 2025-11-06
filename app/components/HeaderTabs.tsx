@@ -26,11 +26,11 @@ const tabs = Object.entries(paths.landing).map(([key, path]) => ({
 export default function HeaderTabs() {
 	const pathname = usePathname();
 	const { theme, setTheme } = useTheme();
-	const [mounted, setMounted] = useState(false);
+	// const [mounted, setMounted] = useState(false);
 
-	useEffect(() => {
-		setMounted(true);
-	}, []);
+	// useEffect(() => {
+	// 	setMounted(true);
+	// }, []);
 
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -88,7 +88,7 @@ export default function HeaderTabs() {
 		<header className='flex justify-center items-center w-full'>
 			<Card className='w-full max-w-[1200px] h-[100px] border-none shadow-none relative flex items-center justify-center bg-background'>
 				{/* 🌙 Тема — рендерим только после монтирования */}
-				{mounted && (
+				{/* {mounted && (
 					<Button
 						variant='ghost'
 						size='icon'
@@ -101,7 +101,7 @@ export default function HeaderTabs() {
 							<MoonIcon className='h-[1.2rem] w-[1.2rem]' />
 						)}
 					</Button>
-				)}
+				)} */}
 
 				<CardContent className='p-0'>
 					<div className='relative'>
