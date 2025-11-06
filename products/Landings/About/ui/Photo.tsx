@@ -10,14 +10,14 @@ const Photo = () => {
 				initial={{ opacity: 0 }}
 				animate={{
 					opacity: 1,
-					transition: { delay: 2, duration: 0.4, ease: 'easeIn' },
+					transition: { delay: 1, duration: 0.4, ease: 'easeIn' },
 				}}
 			>
 				<motion.div
 					initial={{ opacity: 0 }}
 					animate={{
 						opacity: 1,
-						transition: { delay: 2.4, duration: 0.4, ease: 'easeInOut' },
+						transition: { delay: 1.4, duration: 0.4, ease: 'easeInOut' },
 					}}
 					className='w-[298px] h-[298px] xl:w-[498px] xl:h-[498px] absolute'
 					// mix-blend -lighten
@@ -26,10 +26,10 @@ const Photo = () => {
 						width={498}
 						height={498}
 						alt='Person Picture'
-						src='/assets/Photo.png'
+						src='/assets/photos/Photo.png'
 						priority
 						quality={100}
-						className='object-contain  '
+						className='object-contain '
 					/>
 				</motion.div>
 				{/* circle */}

@@ -36,8 +36,8 @@ export default function HomeHeroSection() {
 								<Image
 									src={
 										isDark
-											? '/assets/WhiteUnderline.png'
-											: '/assets/BlackUnderline.png'
+											? '/assets/photos/WhiteUnderline.png'
+											: '/assets/photos/BlackUnderline.png'
 									}
 									alt='decorative underline'
 									width={200}
