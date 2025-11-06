@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { paths } from '../shared/config/auth/routes';
 
 // const tabs = ['Главная', 'Галерея', 'Цены', 'Обо мне', 'Важно', 'Отзывы'];
@@ -24,12 +25,20 @@ const tabs = Object.entries(paths.landing).map(([key, path]) => ({
 }));
 
 export default function HeaderTabs() {
+	const pathname = usePathname();
+
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [hoverStyle, setHoverStyle] = useState({});
 	const [activeStyle, setActiveStyle] = useState({ left: '0px', width: '0px' });
 	const [isDarkMode, setIsDarkMode] = useState(false);
 	const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+	// ✅ Определяем активный таб при загрузке и смене маршрута
+	useEffect(() => {
+		const foundIndex = tabs.findIndex(tab => tab.path === pathname);
+		setActiveIndex(foundIndex !== -1 ? foundIndex : 0);
+	}, [pathname]);
 
 	useEffect(() => {
 		if (hoveredIndex !== null) {
