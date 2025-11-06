@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import HeaderTabs from './components/HeaderTabs';
 import { RulerFooter } from './components/RulerFooter';
 import './globals.css';
+import { ThemeProvider } from './shared/providers/ThemeProvider';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -14,16 +15,22 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang='en'>
-			<>
-				<body className='min-h-screen flex flex-col bg-background text-foreground'>
+		<html lang='en' suppressHydrationWarning>
+			<body className='min-h-screen flex flex-col bg-background text-foreground'>
+				{/* === Оборачиваем всё приложение в ThemeProvider === */}
+				<ThemeProvider
+					attribute='class'
+					defaultTheme='system'
+					enableSystem
+					disableTransitionOnChange
+				>
 					<HeaderTabs />
 					{/* Основной контент страницы */}
 					<main className='flex-1'>{children}</main>
-					{/* Футер всегда снизу */}
+					{/* Футер */}
 					<RulerFooter />
-				</body>
-			</>
+				</ThemeProvider>
+			</body>
 		</html>
 	);
 }
