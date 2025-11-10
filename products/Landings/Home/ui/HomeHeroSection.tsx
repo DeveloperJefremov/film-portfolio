@@ -35,10 +35,15 @@ export default function HomeHeroSection() {
 						<span className='relative inline-block'>
 							через{' '}
 							<ShimmeringText
-								// className='text-4xl font-semibold'
 								text='объектив'
 								color={isDark ? 'white' : 'black'}
 								wave
+								transition={{
+									repeat: Infinity,
+									repeatType: 'loop',
+									repeatDelay: 10, // пауза после полного прохода (в секундах)
+									ease: 'easeInOut',
+								}}
 							/>
 							<div className='absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-full flex justify-center'>
 								<Image
