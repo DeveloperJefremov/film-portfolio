@@ -116,8 +116,13 @@
 	* {
 		@apply border-border outline-ring/50;
 	}
+	/* body {
+		@apply bg-background text-foreground;
+	} */
 	body {
 		@apply bg-background text-foreground;
+		font-family: var(--font-lora), serif; /* <-- делаем Lora дефолтным */
+		font-weight: 400; /* optional, чтобы по умолчанию был Regular */
 	}
 }
 
@@ -134,4 +139,16 @@
 	font-weight: 300; /* Light вместо Regular */
 	letter-spacing: 0.4em; /* как в оригинале */
 	font-size: 0.75rem; /* чуть меньше */
+}
+
+.font-lora {
+	font-family: var(--font-lora) !important;
+}
+.font-playfair-italic {
+	font-family: var(--font-playfair-italic) !important;
+}
+
+.font-playfair-bold {
+	font-family: var(--font-playfair) !important;
+	font-weight: 700 !important;
 }

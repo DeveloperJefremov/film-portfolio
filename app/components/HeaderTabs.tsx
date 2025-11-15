@@ -80,9 +80,9 @@ export default function HeaderTabs() {
 		});
 	}, []);
 
-	const toggleDarkMode = () => {
-		setTheme(theme === 'dark' ? 'light' : 'dark');
-	};
+	// const toggleDarkMode = () => {
+	// 	setTheme(theme === 'dark' ? 'light' : 'dark');
+	// };
 
 	return (
 		<header className='flex justify-center items-center w-full'>

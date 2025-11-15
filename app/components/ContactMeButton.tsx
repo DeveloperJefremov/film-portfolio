@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Magnetic } from '@/components/ui/shadcn-io/magnetic';
+import { RollingText } from '@/components/ui/shadcn-io/rolling-text';
 import { AnimatePresence, motion } from 'framer-motion';
 import { GithubIcon, InstagramIcon, MailIcon, SendIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -46,27 +47,27 @@ const socials: SocialLink[] = [
 	},
 ];
 
-const itemVariants = {
-	hidden: { opacity: 0, x: -20 },
-	visible: (i: number) => ({
-		opacity: 1,
-		x: 0,
-		transition: {
-			delay: i * 0.05,
-			duration: 0.3,
-			ease: 'easeOut',
-		},
-	}),
-	hover: { scale: 1.05 },
-	tap: { scale: 0.95 },
-};
+// const itemVariants = {
+// 	hidden: { opacity: 0, x: -20 },
+// 	visible: (i: number) => ({
+// 		opacity: 1,
+// 		x: 0,
+// 		transition: {
+// 			delay: i * 0.05,
+// 			duration: 0.3,
+// 			ease: 'easeOut',
+// 		},
+// 	}),
+// 	hover: { scale: 1.05 },
+// 	tap: { scale: 0.95 },
+// };
 
 export default function ContactMeButton() {
 	const [isOpen, setIsOpen] = React.useState(false);
 	const dropdownRef = React.useRef<HTMLDivElement>(null);
 
 	useClickAway(dropdownRef, () => setIsOpen(false));
-
+	const [isHovered, setIsHovered] = React.useState(false);
 	return (
 		<div className='relative' ref={dropdownRef}>
 			{/* Кнопка без Magnetic */}
@@ -75,15 +76,22 @@ export default function ContactMeButton() {
 				variant='outline'
 				size='sm'
 				onClick={() => setIsOpen(!isOpen)}
+				onMouseEnter={() => setIsHovered(false)}
+				onMouseLeave={() => setIsHovered(true)}
 				className='rounded-full px-4 py-2 flex items-center gap-2 bg-background hover:bg-accent/10'
 				aria-expanded={isOpen}
 				aria-haspopup='true'
 			>
-				<span>Мои контакты</span>
+				<RollingText
+					text='Мои контакты'
+					inView={isHovered} // анимация запускается только при наведении
+					transition={{ duration: 0.6, delay: 0.05 }} // скорость и задержка
+					// key={isHovered ? 'hover' : 'idle'} // чтобы перезапустить анимацию при уходе/возврате курсора
+				/>
+
 				<MailIcon className='w-4 h-4' />
 			</Button>
-			{/* </Magnetic> */}
-			{/* Дропдаун — вертикальный список */}
+
 			{/* Дропдаун — ровно под кнопкой, отцентрирован */}
 			<AnimatePresence>
 				{isOpen && (
@@ -92,7 +100,7 @@ export default function ContactMeButton() {
 						animate={{ opacity: 1, scale: 1, y: 0 }}
 						exit={{ opacity: 0, scale: 0.95, y: -8 }}
 						transition={{ duration: 0.2, ease: 'easeOut' }}
-						className='absolute left-1/2 -translate-x-1/2 mt-2 w-56 bg-card rounded-xl shadow-xl border border-border z-50 overflow-hidden'
+						className='absolute left-1/2 -translate-x-1/2 mt-2 w-34 bg-card rounded-xl shadow-xl border border-border z-50 overflow-hidden'
 						style={{ transformOrigin: 'top center' }}
 					>
 						<div className='py-2'>

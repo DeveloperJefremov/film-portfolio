@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { RulerFooter } from './components/RulerFooter';
-import { montserrat, playfair } from './fonts';
+import { lora, montserrat, playfair, playfairItalic } from './fonts';
 import './globals.css';
 import { ThemeProvider } from './shared/providers/ThemeProvider';
 import LayoutHeader from './widgets/LayoutHeader';
@@ -20,7 +20,7 @@ export default function RootLayout({
 			<body
 				className={`
           min-h-screen flex flex-col bg-background text-foreground
-          ${playfair.variable} ${montserrat.variable}
+       ${montserrat.variable} ${playfair.variable} ${lora.variable} ${playfairItalic.variable}
         `}
 			>
 				{/* === Оборачиваем всё приложение в ThemeProvider === */}

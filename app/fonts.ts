@@ -1,6 +1,7 @@
 // app/fonts.ts
 import localFont from 'next/font/local';
 
+// === ТВОЙ СТАРЫЙ КОД (ЛОГО) — ОСТАЁТСЯ ===
 const playfair = localFont({
 	src: [
 		{
@@ -40,4 +41,34 @@ const montserrat = localFont({
 	display: 'swap',
 });
 
-export { montserrat, playfair };
+// === НОВОЕ: ДЛЯ HERO (из скрина) ===
+const lora = localFont({
+	src: [
+		{
+			path: '../public/fonts/Lora-Regular.ttf',
+			weight: '400',
+			style: 'normal',
+		},
+		{
+			path: '../public/fonts/Lora-Bold.ttf',
+			weight: '700',
+			style: 'normal',
+		},
+	],
+	variable: '--font-lora',
+	display: 'swap',
+});
+
+const playfairItalic = localFont({
+	src: [
+		{
+			path: '../public/fonts/PlayfairDisplay-Italic.ttf',
+			weight: '400',
+			style: 'italic',
+		},
+	],
+	variable: '--font-playfair-italic',
+	display: 'swap',
+});
+
+export { lora, montserrat, playfair, playfairItalic };
