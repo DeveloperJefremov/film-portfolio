@@ -1,5 +1,6 @@
 import HomeHeroSection from './ui/HomeHeroSection';
 import HomePhotoSection from './ui/HomePhotoSection';
+import HomepageTestimonials from './ui/Testimonials/HomepageTestimonials';
 
 const Home = () => {
 	return (
@@ -7,6 +8,7 @@ const Home = () => {
 			<div>
 				<HomeHeroSection />
 				<HomePhotoSection />
+				<HomepageTestimonials />
 			</div>
 		</div>
 	);
