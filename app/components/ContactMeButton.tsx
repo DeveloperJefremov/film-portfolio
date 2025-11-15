@@ -47,27 +47,13 @@ const socials: SocialLink[] = [
 	},
 ];
 
-// const itemVariants = {
-// 	hidden: { opacity: 0, x: -20 },
-// 	visible: (i: number) => ({
-// 		opacity: 1,
-// 		x: 0,
-// 		transition: {
-// 			delay: i * 0.05,
-// 			duration: 0.3,
-// 			ease: 'easeOut',
-// 		},
-// 	}),
-// 	hover: { scale: 1.05 },
-// 	tap: { scale: 0.95 },
-// };
-
 export default function ContactMeButton() {
 	const [isOpen, setIsOpen] = React.useState(false);
 	const dropdownRef = React.useRef<HTMLDivElement>(null);
 
 	useClickAway(dropdownRef, () => setIsOpen(false));
-	const [isHovered, setIsHovered] = React.useState(false);
+	const [trigger, setTrigger] = React.useState(false);
+	const [textAnimating, setTextAnimating] = React.useState(false);
 	return (
 		<div className='relative' ref={dropdownRef}>
 			{/* Кнопка без Magnetic */}
@@ -76,17 +62,20 @@ export default function ContactMeButton() {
 				variant='outline'
 				size='sm'
 				onClick={() => setIsOpen(!isOpen)}
-				onMouseEnter={() => setIsHovered(false)}
-				onMouseLeave={() => setIsHovered(true)}
+				onMouseEnter={() => {
+					if (!textAnimating) setTrigger(true); // <-- главный фикс
+				}}
+				onMouseLeave={() => {
+					setTrigger(false);
+				}}
 				className='rounded-full px-4 py-2 flex items-center gap-2 bg-background hover:bg-accent/10'
-				aria-expanded={isOpen}
-				aria-haspopup='true'
 			>
 				<RollingText
 					text='Мои контакты'
-					inView={isHovered} // анимация запускается только при наведении
-					transition={{ duration: 0.6, delay: 0.05 }} // скорость и задержка
-					// key={isHovered ? 'hover' : 'idle'} // чтобы перезапустить анимацию при уходе/возврате курсора
+					trigger={trigger}
+					onStateChange={state => {
+						setTextAnimating(state === 'animating');
+					}}
 				/>
 
 				<MailIcon className='w-4 h-4' />

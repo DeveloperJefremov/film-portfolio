@@ -1,90 +1,81 @@
 'use client';
- 
+
+import { motion } from 'motion/react';
 import * as React from 'react';
-import {
-  motion,
-  useInView,
-  type UseInViewOptions,
-  type Transition,
-} from 'motion/react';
- 
-const ENTRY_ANIMATION = {
-  initial: { rotateX: 0 },
-  animate: { rotateX: 90 },
-};
- 
-const EXIT_ANIMATION = {
-  initial: { rotateX: 90 },
-  animate: { rotateX: 0 },
-};
- 
-const formatCharacter = (char: string) => (char === ' ' ? '\u00A0' : char);
- 
-type RollingTextProps = Omit<React.ComponentProps<'span'>, 'children'> & {
-  transition?: Transition;
-  inView?: boolean;
-  inViewMargin?: UseInViewOptions['margin'];
-  inViewOnce?: boolean;
-  text: string;
-};
- 
-function RollingText({
-  ref,
-  transition = { duration: 0.5, delay: 0.1, ease: 'easeOut' },
-  inView = false,
-  inViewMargin = '0px',
-  inViewOnce = true,
-  text,
-  ...props
-}: RollingTextProps) {
-  const localRef = React.useRef<HTMLSpanElement>(null);
-  React.useImperativeHandle(ref, () => localRef.current!);
- 
-  const inViewResult = useInView(localRef, {
-    once: inViewOnce,
-    margin: inViewMargin,
-  });
-  const isInView = !inView || inViewResult;
- 
-  const characters = React.useMemo(() => text.split(''), [text]);
- 
-  return (
-    <span data-slot="rolling-text" {...props} ref={ref}>
-      {characters.map((char, idx) => (
-        <span
-          key={idx}
-          className="relative inline-block perspective-[9999999px] transform-3d w-auto"
-          aria-hidden="true"
-        >
-          <motion.span
-            className="absolute inline-block backface-hidden origin-[50%_25%]"
-            initial={ENTRY_ANIMATION.initial}
-            animate={isInView ? ENTRY_ANIMATION.animate : undefined}
-            transition={{
-              ...transition,
-              delay: idx * (transition?.delay ?? 0),
-            }}
-          >
-            {formatCharacter(char)}
-          </motion.span>
-          <motion.span
-            className="absolute inline-block backface-hidden origin-[50%_100%]"
-            initial={EXIT_ANIMATION.initial}
-            animate={isInView ? EXIT_ANIMATION.animate : undefined}
-            transition={{
-              ...transition,
-              delay: idx * (transition?.delay ?? 0) + 0.3,
-            }}
-          >
-            {formatCharacter(char)}
-          </motion.span>
-          <span className="invisible">{formatCharacter(char)}</span>
-        </span>
-      ))}
- 
-      <span className="sr-only">{text}</span>
-    </span>
-  );
+
+const format = (c: string) => (c === ' ' ? '\u00A0' : c);
+
+export function RollingText({
+	text,
+	trigger,
+	onStateChange,
+	...props
+}: {
+	text: string;
+	trigger: boolean;
+	onStateChange?: (state: 'idle' | 'animating' | 'finished') => void;
+} & React.HTMLAttributes<HTMLSpanElement>) {
+	const chars = React.useMemo(() => text.split(''), [text]);
+
+	const [isAnimating, setIsAnimating] = React.useState(false);
+	const [run, setRun] = React.useState(false);
+	const [resetKey, setResetKey] = React.useState(0);
+
+	// Храним предыдущее значение trigger
+	const prevTrigger = React.useRef<boolean>(false);
+
+	// Запускаем анимацию только при переходе false → true
+	React.useEffect(() => {
+		const isHoverStarted = trigger && !prevTrigger.current;
+
+		if (isHoverStarted && !isAnimating) {
+			setRun(true);
+			setIsAnimating(true);
+			onStateChange?.('animating');
+		}
+
+		prevTrigger.current = trigger;
+	}, [trigger, isAnimating, onStateChange]);
+
+	const handleLastComplete = (index: number) => {
+		if (index === chars.length - 1) {
+			onStateChange?.('finished');
+
+			// завершаем анимацию
+			setRun(false);
+			setIsAnimating(false);
+
+			// моментальный reset
+			setResetKey(k => k + 1);
+		}
+	};
+
+	return (
+		<span {...props} key={resetKey}>
+			{chars.map((char, i) => (
+				<span key={i} className='relative inline-block perspective-[600px]'>
+					<motion.span
+						className='absolute inline-block backface-hidden origin-[50%_25%]'
+						initial={{ rotateX: 0 }}
+						animate={run ? { rotateX: 90 } : { rotateX: 0 }}
+						transition={{ duration: 0.25, delay: i * 0.04 }}
+						onAnimationComplete={() => handleLastComplete(i)}
+					>
+						{format(char)}
+					</motion.span>
+
+					<motion.span
+						className='absolute inline-block backface-hidden origin-[50%_100%]'
+						initial={{ rotateX: 90 }}
+						animate={run ? { rotateX: 0 } : { rotateX: 90 }}
+						transition={{ duration: 0.25, delay: i * 0.04 + 0.12 }}
+					>
+						{format(char)}
+					</motion.span>
+
+					<span className='invisible'>{format(char)}</span>
+				</span>
+			))}
+		</span>
+	);
 }
- 
-export { RollingText, type RollingTextProps };
