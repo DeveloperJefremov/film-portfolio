@@ -56,19 +56,22 @@ export default function ContactMeButton() {
 	const [textAnimating, setTextAnimating] = React.useState(false);
 	return (
 		<div className='relative' ref={dropdownRef}>
-			{/* Кнопка без Magnetic */}
-			{/* <Magnetic> */}
 			<Button
 				variant='outline'
 				size='sm'
 				onClick={() => setIsOpen(!isOpen)}
 				onMouseEnter={() => {
-					if (!textAnimating) setTrigger(true); // <-- главный фикс
+					if (!textAnimating) setTrigger(true);
 				}}
 				onMouseLeave={() => {
 					setTrigger(false);
 				}}
-				className='rounded-full px-4 py-2 flex items-center gap-2 bg-background hover:bg-accent/10'
+				className='
+    rounded-full px-4 py-2 flex items-center gap-2 
+    bg-white hover:bg-gray-100
+    cursor-pointer 
+    transition-colors duration-200
+  '
 			>
 				<RollingText
 					text='Мои контакты'
@@ -77,7 +80,6 @@ export default function ContactMeButton() {
 						setTextAnimating(state === 'animating');
 					}}
 				/>
-
 				<MailIcon className='w-4 h-4' />
 			</Button>
 
